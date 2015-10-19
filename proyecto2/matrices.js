@@ -82,15 +82,13 @@ if(matArr.length==2){
     //debugger;
     var determinante=1;
 		var limite=matriz1.length;
-    var matSust;
+    var matSust,original=matriz1;
     //INICIALIZANDO NUEVA MATRIZ
     matSust=new Array(limite);
     for(var r=0;r<limite;r++)
       matSust[r]=new Array(limite);
 		for(var i=0;i<limite;i++){
 			for(var j=0;j<limite;j++){
-        j=j+i;
-        if(j>=limite)j=limite-1;
         if(i+1==limite && j+1==limite)
           break;
         else{
@@ -100,7 +98,7 @@ if(matArr.length==2){
   					var val=matriz1[j][i];
   					if(Number(val)!=1){//buscar si hay algun 1 en la misma columna
   						var pos=0;
-  						for(var k=Number(j)+1;k<limite;k++){
+  						for(var k=Number(j)+2;k<limite;k++){
   							if(Number(matriz1[k][i])===1){
   								pos=k;
                   console.log("pos encontradi en cambia1 "+k+", "+i);
@@ -205,7 +203,7 @@ if(matArr.length==2){
   				}else{//convertir a 0 lo de abajo en la columna
             pos=0;
             //primero buscar si existe un 0 abajo
-            for(var k= Number(j)+1;k<limite;k++){
+            for(var k= Number(j)+2;k<limite;k++){
               if(Number(matSust[k][i])===0){
                 pos=k;
                 console.log("Se encontron un 0 en "+k+", "+i);
@@ -260,7 +258,7 @@ if(matArr.length==2){
 			// console.log(matriz1);
 		}
     console.log("Matriz original");
-    console.log(matriz1);
+    console.log(original);
     console.log("Matriz Final");
     console.log(matSust);
     console.log("determinante");
