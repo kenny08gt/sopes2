@@ -1,17 +1,19 @@
 var fs=require('fs');
-var matriz="",ruta="";
+var matriz="",ruta="",accion="";
 process.argv.forEach(function (val, index, array) {
   if(index===2){
-  	matriz=val;
+  	accion=val;
   }else if(index===3){
   	ruta=val;
   }
 });
-if(matriz=="archivo"){
-	var buffer=fs.readFileSync(ruta);
-	matriz=buffer.toString();
+var buffer=fs.readFileSync(ruta);
+matriz=buffer.toString();
+if(accion=="multiplicacion"){
+  console.log("es multi "+matriz);
 }else{
-	matriz=ruta;
+  console.log("es determinante "+matriz);
+  //matriz=ruta;
 }
 var matriz1,matriz2;
 var matArr=matriz.split("*");
@@ -57,7 +59,7 @@ if(matArr.length==2){
 	console.log("es multiplicacion");
 	//PASAR MATRICES A OBJECTOS
 
-	console.log("f1 "+matriz1.length+" c1 "+matriz1[0].length+" f2 "+matriz1[0].length+" c2 "+matriz2[1].length);
+	//console.log("f1 "+matriz1.length+" c1 "+matriz1[0].length+" f2 "+matriz1[0].length+" c2 "+matriz2[1].length);
 	if(matriz1[0].length==matriz2.length){
 		var resultante = new Array(matriz1.length);
 		for(var i=0;i<matriz1.length;i++){
@@ -74,7 +76,7 @@ if(matArr.length==2){
 		console.log(resultante);
 	}else{
 		console.log("El numero de filas de la matriz 1 no es igual a el numero de columnas de la matriz 2");
-		console.log(matriz1[0].length+"!="+matriz2.length);
+		////console.log(matriz1[0].length+"!="+matriz2.length);
 	}
 }else{//DETERMINANTE
 	console.log("es determinante");
@@ -89,6 +91,7 @@ if(matArr.length==2){
       matSust[r]=new Array(limite);
 		for(var i=0;i<limite;i++){
 			for(var j=0;j<limite;j++){
+
         if(i+1==limite && j+1==limite)
           break;
         else{
@@ -201,52 +204,54 @@ if(matArr.length==2){
   						}
   					}
   				}else{//convertir a 0 lo de abajo en la columna
-            pos=0;
-            //primero buscar si existe un 0 abajo
-            for(var k= Number(j)+2;k<limite;k++){
-              if(Number(matSust[k][i])===0){
-                pos=k;
-                console.log("Se encontron un 0 en "+k+", "+i);
-                break;
+            if(j>i){
+              pos=0;
+              //primero buscar si existe un 0 abajo
+              for(var k= Number(j)+2;k<limite;k++){
+                if(Number(matSust[k][i])===0){
+                  pos=k;
+                  console.log("Se encontron un 0 en "+k+", "+i);
+                  break;
+                }
               }
-            }
-            if(pos!=0){
-              //INICIALIZANDO NUEVA MATRIZ
-              var matSust2=new Array(limite);
-              for(var r=0;r<limite;r++)
-                matSust2[r]=new Array(limite);
-              //cambiar filas y multiplicar por -1 el D
-              for(var k=0;k<limite;k++){
-                //console.log(pos);
-                for(var l=0;l<limite;l++){
-                  //console.log(k+","+l+" "+matSust[k][l]);
-                  //console.log(pos+","+j);
-                  if(k===pos){
-                    matSust2[j][l]=matSust[k][l];
-                  }else if(k===j){
-                    matSust2[pos][l]=matSust[k][l];
-                  }else{
-                    matSust2[k][l]=matSust[k][l];
+              if(pos!=0){
+                //INICIALIZANDO NUEVA MATRIZ
+                var matSust2=new Array(limite);
+                for(var r=0;r<limite;r++)
+                  matSust2[r]=new Array(limite);
+                //cambiar filas y multiplicar por -1 el D
+                for(var k=0;k<limite;k++){
+                  //console.log(pos);
+                  for(var l=0;l<limite;l++){
+                    //console.log(k+","+l+" "+matSust[k][l]);
+                    //console.log(pos+","+j);
+                    if(k===pos){
+                      matSust2[j][l]=matSust[k][l];
+                    }else if(k===j){
+                      matSust2[pos][l]=matSust[k][l];
+                    }else{
+                      matSust2[k][l]=matSust[k][l];
+                    }
                   }
                 }
-              }
-              determinante=Number(determinante)*(-1);
-              matSust=matSust2;
-            }else{//sino empezar a multiplar y sumar
-              //debugger;
-              if(j>i){
-                var val=matSust[j][i];
-                for(var k=0;k<limite;k++){
-                  var val_previo=matSust[i][k];
-                  var val2=matSust[j][k];
-                  //console.log("val "+val+", val previo "+val_previo);
-                  val2=((Number(val)* (-1))*Number(val_previo))+Number(val2);
-                  //console.log("val_nuevo "+val2);
-                  matSust[j][k]=val2;
+                determinante=Number(determinante)*(-1);
+                matSust=matSust2;
+              }else{//sino empezar a multiplar y sumar
+                //debugger;
+                if(j>i){
+                  var val=matSust[j][i];
+                  for(var k=0;k<limite;k++){
+                    var val_previo=matSust[i][k];
+                    var val2=matSust[j][k];
+                    //console.log("val "+val+", val previo "+val_previo);
+                    val2=((Number(val)* (-1))*Number(val_previo))+Number(val2);
+                    //console.log("val_nuevo "+val2);
+                    matSust[j][k]=val2;
+                  }
+                  console.log(matSust);
+                }else{
+                  //console.log("j>i "+j+", "+i);
                 }
-                console.log(matSust);
-              }else{
-                //console.log("j>i "+j+", "+i);
               }
             }
   				}
