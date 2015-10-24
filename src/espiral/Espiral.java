@@ -25,20 +25,18 @@ public class Espiral {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        for (int i = 0; i < args.length; i++) {
-            System.out.println(args[i]);
-        }
-        String nodo = args[0];
+        // TODO code application logic here        
+        /*String nodo = args[0];
         String inicio = args[1];        
-        String fin = args[2];        
+        String fin = args[2];        */
+        String nodo="0",inicio="500",fin="1000";        
         Espiral e = new Espiral();        
         e.iniciar(Integer.parseInt(nodo), Integer.parseInt(inicio),Integer.parseInt(fin));
     }
 
     public void iniciar(int id_nodo, int inicio,int fin) {        
-        int m = 0, cont = inicio;
-        m = inicio-fin;
+        int m = 0, cont = inicio,otra=0;
+        m = fin - inicio;
         int N = (int) ((sqrt(m) - 1) / 2);
         N = 2 * N + 1;
         //System.out.println("Filas y columnas: "+N);
@@ -46,32 +44,36 @@ public class Espiral {
         int x = (int) (N / 2);
         int y = x;
         int arriba = 1, abajo = 2, derecha = 1, izquierda = 2;        
-        while (cont < m) {
+        while (otra < m) {
             //System.out.println("inicio while %d y %d\n",cont,m);
             int i = 0;
-            for (i = 0; i < derecha && cont < m && x < N && y < N; i++) {
+            for (i = 0; i < derecha && otra < m && x < N && y < N; i++) {
                 cont++;
+                otra++;
                 matriz[x][y] = cont;
                 x++;
             }
             i = 0;
             derecha += 2;
-            for (i = 0; i < arriba && cont < m && x < N && y < N; i++) {
+            for (i = 0; i < arriba && otra < m && x < N && y < N; i++) {
                 cont++;
+                otra++;
                 matriz[x][y] = cont;
                 y--;
             }
             i = 0;
             arriba += 2;
-            for (i = 0; i < izquierda && cont < m && x < N && y < N; i++) {
+            for (i = 0; i < izquierda && otra < m && x < N && y < N; i++) {
                 cont++;
+                otra++;
                 matriz[x][y] = cont;
                 x--;
             }
             izquierda += 2;
             i = 0;
-            for (i = 0; i < abajo && cont < m && x < N && y < N; i++) {
+            for (i = 0; i < abajo && otra < m && x < N && y < N; i++) {
                 cont++;
+                otra++;
                 matriz[x][y] = cont;
                 y++;
             }
@@ -86,11 +88,12 @@ public class Espiral {
         for (int j = 0; j < n; j++) {            
             for (int i = 0; i < n; i++) {                
                 if (es_primo(matriz[i][j]) == 1) {
-                    System.out.println("P");                    
+                    System.out.print("1,"); //si hay que pintar
                 } else {
-                    System.out.println(matriz[i][j]);                              
+                    System.out.print("0,");  //0 si es normal
                 }
             }            
+            System.out.println("");
         }
     }
     private void graficar(int[][] matriz, int n) {
