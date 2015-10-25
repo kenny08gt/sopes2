@@ -7,12 +7,12 @@ process.argv.forEach(function (val, index, array) {
   	ruta=val;
   }
 });
-//var buffer=fs.readFileSync(ruta);
-matriz=ruta;
+var buffer=fs.readFileSync(ruta);
+matriz=buffer.toString();
 if(accion=="multiplicacion"){
-  //console.log("es multi "+matriz);
+  console.log("es multi "+matriz);
 }else{
-  //console.log("es determinante "+matriz);
+  console.log("es determinante "+matriz);
   //matriz=ruta;
 }
 var matriz1,matriz2;
@@ -29,15 +29,11 @@ if(matArr.length==2){
 		}
 	}
 	//segunda matriz
-  var mat1=matArr[1].split("[");
-  //console.log("mat1 ");
-  //console.log(mat1);
 	matriz2=new Array(mat1.length-2);
-  //console.log("filas mat2 "+(mat1.length-2));
+	var mat1=matArr[1].split("[");
 	for(var i=2;i<mat1.length;i++){
 		var row=mat1[i].split("]");
 		var elementos=row[0].split(",");
-    //console.log("elementos.l "+elementos.length);
 		matriz2[i-2]=new Array(elementos.length);
 		for(var j=0;j<elementos.length;j++){
 			matriz2[i-2][j]=elementos[j];
@@ -60,7 +56,7 @@ if(matArr.length==2){
 }
 //MULTIPLICACION
 if(matArr.length==2){
-	//console.log("es multiplicacion");
+	console.log("es multiplicacion");
 	//PASAR MATRICES A OBJECTOS
 
 	//console.log("f1 "+matriz1.length+" c1 "+matriz1[0].length+" f2 "+matriz1[0].length+" c2 "+matriz2[1].length);
@@ -77,22 +73,10 @@ if(matArr.length==2){
 				}
 			}
 		}
-    var mat2="[";
-    for(var j=0;j<resultante.length;j++){
-      mat2+="[";
-      for(var k=0;k<resultante[0].length;k++){
-        mat2+=resultante[j][k];
-        if(k+1<resultante[0].length)mat2+=",";
-      }
-      mat2+="]";
-    }
-    mat2+="]";
-    console.log(mat2);
+		console.log(resultante);
 	}else{
 		console.log("El numero de filas de la matriz 1 no es igual a el numero de columnas de la matriz 2");
-		console.log(matriz1[0].length+"!="+matriz2.length);
-    console.log(matriz1);
-    console.log(matriz2);
+		////console.log(matriz1[0].length+"!="+matriz2.length);
 	}
 }else{//DETERMINANTE
 	console.log("es determinante");
